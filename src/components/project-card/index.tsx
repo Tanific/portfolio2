@@ -73,7 +73,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   };
 
   const dynamicBoxShadow = isHovering
-    ? `${shadow.x}px ${shadow.y}px 20px 5px ${theme.palette.primary.light}30`
+    ? `${shadow.x}px ${shadow.y}px 20px 5px ${theme.palette.primary.main}30`
     : `0px 4px 8px 0px ${theme.palette.common.black}20`;
 
   return (
