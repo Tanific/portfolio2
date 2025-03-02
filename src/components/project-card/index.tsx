@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Card,
   CardActions,
@@ -32,23 +32,71 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   technologies = [],
 }) => {
   const theme = useTheme();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [shadow, setShadow] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  const maxTilt = 5;
+  const maxShadowOffset = 20;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    
+    const rect = cardRef.current.getBoundingClientRect();
+    
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    const percentX = (e.clientX - centerX) / (rect.width / 2);
+    const percentY = (e.clientY - centerY) / (rect.height / 2);
+    
+    setTilt({
+      x: -percentY * maxTilt,
+      y: percentX * maxTilt
+    });
+    
+    setShadow({
+      x: -percentX * maxShadowOffset,
+      y: -percentY * maxShadowOffset
+    });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    setTilt({ x: 0, y: 0 });
+    setShadow({ x: 0, y: 0 });
+  };
+
+  const dynamicBoxShadow = isHovering
+    ? `${shadow.x}px ${shadow.y}px 20px 5px ${theme.palette.primary.light}30`
+    : `0px 4px 8px 0px ${theme.palette.common.black}20`;
 
   return (
     <Card 
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       sx={{ 
         height: '100%', 
         display: 'flex', 
         flexDirection: 'column',
-        transition: 'transform 0.3s, box-shadow 0.3s',
-        '&:hover': {
-          transform: 'translateY(-8px)',
-          boxShadow: `0px 12px 20px -10px ${theme.palette.primary.main}40`,
-        },
+        transition: 'transform 0.2s ease-out',
+        transform: isHovering 
+          ? `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(-8px)` 
+          : 'perspective(1000px) rotateX(0deg) rotateY(0deg)',
+        boxShadow: dynamicBoxShadow,
         bgcolor: 'background.paper',
         borderRadius: 2,
         overflow: 'hidden',
+        transformStyle: 'preserve-3d',
       }}
-      elevation={4}
+      elevation={0} 
     >
       <Box sx={{ 
         position: 'relative',

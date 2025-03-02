@@ -29,7 +29,7 @@ const themeOptions: ThemeOptions = {
     },
     text: {
       primary: lightText,
-      secondary: "rgba(255, 255, 255, 0.7)",
+      secondary: "rgba(212, 211, 211, 0.7)",
       disabled: "rgba(255, 255, 255, 0.5)",
     },
     divider: "rgba(255, 255, 255, 0.12)",

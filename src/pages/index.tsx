@@ -4,33 +4,51 @@ import {
   Container,
   Box,
   Divider,
-  Chip,
   Stack,
+  Tooltip,
 } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import CodeIcon from "@mui/icons-material/Code";
 import WorkIcon from "@mui/icons-material/Work";
 import BrushIcon from "@mui/icons-material/Brush";
+import {
+  SiHtml5,
+  SiCss3,
+  SiJavascript,
+  SiTypescript,
+  SiReact,
+  SiBootstrap,
+  SiRedux,
+  SiMui,
+  SiGit,
+  SiWordpress,
+  SiFigma,
+  SiAdobexd,
+  SiAdobephotoshop,
+  SiAdobeillustrator,
+} from "react-icons/si";
 
 const HomePage: React.FC = () => {
+const iconSize = 33;
+
   const technologies = [
-    "HTML",
-    "CSS/SCSS",
-    "JavaScript",
-    "TypeScript",
-    "React",
-    "Material UI",
-    "Bootstrap",
-    "Redux",
-    "Git",
-    "REST API",
-    "Wordpress",
+    { name: "HTML5", icon: <SiHtml5 size={iconSize} color="#E34F26" /> },
+    { name: "CSS3", icon: <SiCss3 size={iconSize} color="#1572B6" /> },
+    { name: "JavaScript", icon: <SiJavascript size={iconSize} color="#F7DF1E" /> },
+    { name: "TypeScript", icon: <SiTypescript size={iconSize} color="#3178C6" /> },
+    { name: "React", icon: <SiReact size={iconSize} color="#61DAFB" /> },
+    { name: "Material UI", icon: <SiMui size={iconSize} color="#0081CB" /> },
+    { name: "Bootstrap", icon: <SiBootstrap size={iconSize} color="#7952B3" /> },
+    { name: "Redux", icon: <SiRedux size={iconSize} color="#764ABC" /> },
+    { name: "Git", icon: <SiGit size={iconSize} color="#F05032" /> },
+    { name: "WordPress", icon: <SiWordpress size={iconSize} color="#21759B" /> },
   ];
+
   const designTools = [
-    "Figma",
-    "Adobe XD",
-    "Adobe Photoshop",
-    "Adobe Illustrator",
+    { name: "Figma", icon: <SiFigma size={iconSize} color="#F24E1E" /> },
+    { name: "Adobe XD", icon: <SiAdobexd size={iconSize} color="#FF61F6" /> },
+    { name: "Adobe Photoshop", icon: <SiAdobephotoshop size={iconSize} color="#31A8FF" /> },
+    { name: "Adobe Illustrator", icon: <SiAdobeillustrator size={iconSize} color="#FF9A00" /> },
   ];
 
   return (
@@ -41,7 +59,7 @@ const HomePage: React.FC = () => {
           <Typography variant="h2" component="h1">
             Hi, I'm Tonje
           </Typography>
-          <Typography variant="h5" color="secondary.main" sx={{ mb: 4, mt: 1 }}>
+          <Typography variant="h5" color="text.secondary" sx={{ mb: 2, mt: 1 }}>
             Front-end Developer | UI / UX Designer
           </Typography>
           <Typography
@@ -54,13 +72,13 @@ const HomePage: React.FC = () => {
             compliance and user experience.
           </Typography>
         </Box>
-        {/* Education and Experience Section */}
+        {/* Education and Experience */}
         <Box
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
             gap: 6,
-            mb: 8,
+            mb: 6,
           }}
         >
           {/* Education */}
@@ -126,13 +144,13 @@ const HomePage: React.FC = () => {
           </Box>
         </Box>
 
-        {/* Skills Section - Technologies and Design Tools Side by Side */}
+        {/* Skills Section - Technologies and Design*/}
         <Box
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
             gap: 6,
-            mt: 8,
+            mt: 6,
           }}
         >
           {/* Technologies Column */}
@@ -144,7 +162,7 @@ const HomePage: React.FC = () => {
                 mb: 2,
               }}
             >
-              <CodeIcon sx={{ mr: 1, color: "secondary.main" }} />
+              <CodeIcon sx={{ mr: 1, color: "primary.main" }} />
               <Typography variant="h4" component="h2">
                 Technologies
               </Typography>
@@ -155,23 +173,25 @@ const HomePage: React.FC = () => {
               direction="row"
               sx={{
                 flexWrap: "wrap",
-                gap: 1,
+                gap: 3,
                 mt: 4,
+                justifyContent: "flex-start",
               }}
             >
               {technologies.map((tech) => (
-                <Chip
-                  key={tech}
-                  label={tech}
-                  variant="outlined"
-                  color="secondary"
-                  sx={{
-                    fontSize: "1rem",
-                    py: 2.5,
-                    borderRadius: 2,
-                    margin: 0,
-                  }}
-                />
+                <Tooltip key={tech.name} title={tech.name} arrow>
+                  <Box sx={{ 
+                    display: "flex", 
+                    alignItems: "center", 
+                    justifyContent: "center",
+                    transition: "transform 0.2s",
+                    "&:hover": {
+                      transform: "scale(1.15)",
+                    }
+                  }}>
+                    {tech.icon}
+                  </Box>
+                </Tooltip>
               ))}
             </Stack>
           </Box>
@@ -185,7 +205,7 @@ const HomePage: React.FC = () => {
                 mb: 2,
               }}
             >
-              <BrushIcon sx={{ mr: 1, color: "secondary.main" }} />
+              <BrushIcon sx={{ mr: 1, color: "primary.main" }} />
               <Typography variant="h4" component="h2">
                 Design Tools
               </Typography>
@@ -196,24 +216,25 @@ const HomePage: React.FC = () => {
               direction="row"
               sx={{
                 flexWrap: "wrap",
-                gap: 1,
+                gap: 3,
                 mt: 4,
-                ml: 0,
+                justifyContent: "flex-start",
               }}
             >
               {designTools.map((tool) => (
-                <Chip
-                  key={tool}
-                  label={tool}
-                  variant="outlined"
-                  color="secondary"
-                  sx={{
-                    fontSize: "1rem",
-                    py: 2.5,
-                    borderRadius: 2,
-                    margin: 0,
-                  }}
-                />
+                <Tooltip key={tool.name} title={tool.name} arrow>
+                  <Box sx={{ 
+                    display: "flex", 
+                    alignItems: "center", 
+                    justifyContent: "center",
+                    transition: "transform 0.2s",
+                    "&:hover": {
+                      transform: "scale(1.15)",
+                    }
+                  }}>
+                    {tool.icon}
+                  </Box>
+                </Tooltip>
               ))}
             </Stack>
           </Box>
