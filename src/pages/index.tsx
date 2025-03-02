@@ -136,7 +136,7 @@ const iconSize = 33;
                 2022 - Present
               </Typography>
               <Typography variant="body1" sx={{ mt: 2 }}>
-                Responsible for the company's IT infrastructure and customer
+                Responsible for IT support and customer
                 service. Created designs for marketing materials, employee
                 uniforms and web displays.
               </Typography>
